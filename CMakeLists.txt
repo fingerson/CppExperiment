@@ -4,8 +4,9 @@ project(ExperimentsGoogle)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#include(/vcpkg/scripts/buildsystems/vcpkg.cmake)
+
 set(PROJECT_SOURCES 
-  src/server_backend/local_tcp_server.cpp
   src/utils/utils.cpp
 )
 
@@ -14,14 +15,12 @@ set(PROJECT_HEADERS
   src/utils
 )
 
-set(EXTERNAL_HEADERS
-  thirdparty/
-)
-
 set(TEST_SOURCES
   tests/basic_test.cc
   tests/utils/utils_test.cc
 )
+
+
 
 include(FetchContent)
 FetchContent_Declare(
@@ -37,10 +36,15 @@ add_executable(Experiment
   ${PROJECT_SOURCES}
 )
 
+find_package(Crow CONFIG REQUIRED)
+target_link_libraries(Experiment
+    PUBLIC
+  Crow::Crow
+)
+
 target_include_directories(Experiment
   PRIVATE
     ${PROJECT_HEADERS}
-    ${EXTERNAL_HEADERS}
 )
 
 enable_testing()
@@ -49,15 +53,16 @@ add_executable(basic_test
   ${PROJECT_SOURCES}
   ${TEST_SOURCES}
 )
+
 target_link_libraries(
   basic_test
   GTest::gtest_main
+  Crow::Crow
 )
 
 target_include_directories(basic_test
   PRIVATE
     ${PROJECT_HEADERS}
-    ${EXTERNAL_HEADERS}
 )
 
 include(GoogleTest)
