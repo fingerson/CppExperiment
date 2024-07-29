@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <string>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 namespace xdo_interface {
 
@@ -24,7 +26,10 @@ namespace xdo_interface {
   void XdoInterface::mouse_click() {
     Window window;
     xdo_get_window_at_mouse(xdo_obj, &window);
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     xdo_mouse_down(xdo_obj, window,1);
+    //std::this_thread::sleep_for(std::chrono::milliseconds(10));
     xdo_mouse_up(xdo_obj, window,1);
+    
   }
 }

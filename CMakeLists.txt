@@ -4,6 +4,11 @@ project(ExperimentsGoogle)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_MAKE_PROGRAM /usr/bin/ninja)
+set(CMAKE_C_COMPILER /usr/bin/clang)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+
+
 SET(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
 
 set(PROJECT_SOURCES 

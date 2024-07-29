@@ -22,6 +22,11 @@ int main(int argc, char** argv) {
     return page;
   });
 
+  CROW_ROUTE(app,"/key/<string>")([](std::string sequence){
+    std::cout<<sequence<<std::endl;
+    return "Typed";
+  });
+
   app.port(18080).multithreaded().run();
 
 
