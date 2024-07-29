@@ -2,7 +2,9 @@
 #define XDOTOOL_LOCAL_INTERFACE
 
 #include <utility>
-#include <xdo.h>
+extern "C" {
+  #include "xdo.h"
+}
 
 namespace xdo_interface {
 

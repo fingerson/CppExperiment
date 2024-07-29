@@ -1,1 +1,1 @@
-cmake --build ./build && ./build/basic_test
+cmake -DCMAKE_BUILD_TYPE=DEBUG ./build && cmake --build ./build && ./build/basic_test

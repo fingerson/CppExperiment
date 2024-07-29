@@ -1,10 +1,11 @@
 #include <xdo_interface.h>
 #include <unistd.h>
 #include <string>
+#include <iostream>
 
 namespace xdo_interface {
 
-  XdoInterface::XdoInterface(): xdo_obj(xdo_new(nullptr)) {
+  XdoInterface::XdoInterface(): xdo_obj(xdo_new(NULL)) {
   }
 
   XdoInterface::~XdoInterface() {
@@ -12,12 +13,7 @@ namespace xdo_interface {
   }
 
   void XdoInterface::mouse_move(int x, int y) {
-
-    char *args[] = {"xdotool","mousemove",&std::to_string(x)[0],&std::to_string(y)[0],nullptr};
-    fork();
-    if (fork() == 0) {
-      execvp("xdotool", args);
-    }
+    xdo_move_mouse_relative(xdo_obj, x, y);
   }
   std::pair<int,int> XdoInterface::mouse_position() {
     return std::pair<int,int>(0,0);
@@ -26,9 +22,9 @@ namespace xdo_interface {
     return std::pair<int,int>(0,0);
   }
   void XdoInterface::mouse_click() {
-    char *args[] = {"xdotool","click","1",nullptr};
-    if (fork() == 0) {
-      execvp("xdotool", args);
-    }
+    Window window;
+    xdo_get_window_at_mouse(xdo_obj, &window);
+    xdo_mouse_down(xdo_obj, window,1);
+    xdo_mouse_up(xdo_obj, window,1);
   }
 }

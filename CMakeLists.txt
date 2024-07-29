@@ -4,6 +4,8 @@ project(ExperimentsGoogle)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+
 set(PROJECT_SOURCES 
   src/utils/utils.cpp
   src/xdo_interface/xdo_interface.cpp
@@ -16,6 +18,7 @@ set(PROJECT_HEADERS
 
 set(EXTERNAL_LIBRARIES
   Crow::Crow
+  xdo
 )
 
 set(TEST_LIBRARIES
@@ -45,6 +48,8 @@ target_include_directories(Experiment
     ${PROJECT_HEADERS}
 )
 
+#target_compile_options(Experiment PRIVATE -lxdo)
+
 enable_testing()
 
 add_executable(basic_test
@@ -64,6 +69,8 @@ target_include_directories(basic_test
   PRIVATE
     ${PROJECT_HEADERS}
 )
+
+#target_compile_options(basic_test PRIVATE -lxdo)
 
 include(GoogleTest)
 gtest_discover_tests(basic_test)
