@@ -6,10 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCES 
   src/utils/utils.cpp
+  src/xdo_interface/xdo_interface.cpp
 )
 
 set(PROJECT_HEADERS
-  src/server_backend/
+  src/xdo_interface/
   src/utils
 )
 
