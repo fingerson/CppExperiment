@@ -4,6 +4,25 @@ project(ExperimentsGoogle)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(PROJECT_SOURCES 
+  src/server_backend/local_tcp_server.cpp
+  src/utils/utils.cpp
+)
+
+set(PROJECT_HEADERS
+  src/server_backend/
+  src/utils
+)
+
+set(EXTERNAL_HEADERS
+  thirdparty/
+)
+
+set(TEST_SOURCES
+  tests/basic_test.cc
+  tests/utils/utils_test.cc
+)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -13,22 +32,22 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(Experiment 
+add_executable(Experiment
   src/main.cpp
-  src/server_backend/local_tcp_server.cpp
+  ${PROJECT_SOURCES}
 )
 
 target_include_directories(Experiment
   PRIVATE
-    src/server_backend/
+    ${PROJECT_HEADERS}
+    ${EXTERNAL_HEADERS}
 )
 
 enable_testing()
 
-add_executable(
-  basic_test
-  tests/basic_test.cc
-  tests/server_backend/local_tcp_server_test.cc
+add_executable(basic_test
+  ${PROJECT_SOURCES}
+  ${TEST_SOURCES}
 )
 target_link_libraries(
   basic_test
@@ -37,7 +56,8 @@ target_link_libraries(
 
 target_include_directories(basic_test
   PRIVATE
-    src/server_backend/
+    ${PROJECT_HEADERS}
+    ${EXTERNAL_HEADERS}
 )
 
 include(GoogleTest)
